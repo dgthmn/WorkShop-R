@@ -8,8 +8,11 @@
 # rstudioapi - Definir a trilha de dados automaticamente
 # data.table - Exportar e importar dados para o R
 # sidrar - Acessar dados do IBGE
+
+###aqui estão os pacotes requeridos para esse script
 required_packages <- c("rstudioapi", "sidrar", "data.table")
 
+###pega lista de pacotes requeridos e faz a instalação, tudo autom
 for (pkg in required_packages) {
   if (!require(pkg, character.only = TRUE)) {
     install.packages(pkg)
@@ -23,18 +26,33 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 # Verificar o diretório de trabalho atual
 print(paste("Diretório de trabalho atual:", getwd()))
 
+#Daqui para cima é como se fosse o cabeçalho de trabalho
+#doR
+
 # ---------------------------------------------------------
 # LEITURA DE ARQUIVOS DOS IBGE
 # ---------------------------------------------------------
 # Tabela 1612 - produtos agricolas
+#O número da tabela escolhida é encontrada no site do IBGE
 info<-info_sidra(1612)
 info
+
+
+### PONTO-CHAVE
+###Aqui a função (get_sindra) de argumento único (api) do "sidrar"
+###significados:
+#/t(tabela)/1612 (número de tabela)/n6 (geografia = n + número da tabela de info)
+###/all (todas as cidades)/c81 (classificação de categoria)
+###/2711 (código dentro da categoria ou all para baixar todos)
+###/v (variável)/214 (código da variável)
+###/p (período)/2024 (ano que queremos trabalahar)
 milho_municipio <- get_sidra(
   api = "/t/1612/n6/all/c81/2711/v/214/p/2024"
 )
 
 head(milho_municipio)
 
+###salvando em excel
 fwrite(milho_municipio, "milho_municipio.csv")
 
 # =========================================================
