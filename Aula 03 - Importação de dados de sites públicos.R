@@ -93,6 +93,11 @@ base_final<-data.frame(Stock=dados_empresa[2],
 base_final
 fwrite(base_final, "VALE3.csv")
 dados_empresa
+
+
+###TUDO AQUI FUNCIONA PARA QUALQUER SITE QUE CONTENHA DADOS PÚBLICOS
+
+
 # =========================================================
 # PRÓXIMOS PASSOS: AUTOMAÇÃO DE DADOS DE SITES PÚBLICOS NO R
 # =========================================================
