@@ -169,6 +169,8 @@ ggsave(
 # 8) FILTRAR APENAS UM ESTADO
 # =========================================================
 
+
+###Filter pega a coluna de estados (abreviados) e faz o recorte###
 # Exemplo: Mato Grosso
 mapa_milho_mt <- mapa_milho %>%
   filter(abbrev_state == "MT")
