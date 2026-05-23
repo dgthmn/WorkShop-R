@@ -1,6 +1,10 @@
 # =========================================================
 # Workshop: Aplicando R no Mundo Real
 # Aula 02 - IMPORTAÇÃO DE DADOS CLIMÁTICOS
+
+###OS DADOS SÃO BAIXAODS DO SITE NASA POWER (power.larc.nasa.gov)
+###Cheque o que os dados gerados (siglas) significam de fato
+
 # =========================================================
 # ---------------------------------------------------------
 # Pacotes necessários
@@ -25,6 +29,8 @@ print(paste("Diretório de trabalho atual:", getwd()))
 # ---------------------------------------------------------
 # LEITURA DE DADOS CLIMÁTICOS 
 # ---------------------------------------------------------
+###Aqui é para carregar as funções direto do github
+###dos autores do pacote (que ainda não foi publicado)
 source('https://raw.githubusercontent.com/allogamous/EnvRtype/master/R/AtmosphericPAram.R')
 source('https://raw.githubusercontent.com/allogamous/EnvRtype/master/R/SradPARAM.R')
 source('https://raw.githubusercontent.com/allogamous/EnvRtype/master/R/SupportFUnction.R')
@@ -40,14 +46,27 @@ source('https://raw.githubusercontent.com/allogamous/EnvRtype/master/R/met_kerne
 source('https://raw.githubusercontent.com/allogamous/EnvRtype/master/R/summary_weather.R')
 source('https://raw.githubusercontent.com/allogamous/EnvRtype/master/R/plot_panel.R')
 
+
+###Nesse pacote, é preciso definir 5 argumentos
+###local é o mais difícil pq tem que ser be específico
+###1 - nome da cidade bem certinho, ex: Recife
+###2 - underline e o código do estado, ex: PE
+###3 - underline e o código do país, ex: BRA
+### O código do país deve ser o internacional oficial
+### O código de cada estado deve ser o oficial do País
+
 # Criando as variáveis para rodas a função get_weather
 local <- "Sorriso_MT_BRA"
 lat = -12.5425
 lon = -55.7211
 data.inicial = as.Date("1/1/2010",format='%m/%d/%Y')
+###Sys.date baixa os dados até a data atual
 data.final = as.Date(Sys.Date(),format='%m/%d/%Y')
   
+#a função get_weather tem 5 parâmetros
 dados_climaticos <- get_weather(env.id = local, lat = lat,lon = lon,start.day = data.inicial,end.day = data.final)
+
+#a função complete.cases retira linhas que não possuem dados/informação
 dados_climaticos <- dados_climaticos[complete.cases(dados_climaticos),]
 head(dados_climaticos)
 fwrite(dados_climaticos, "Sorriso_MT_BRA.csv")
