@@ -5,11 +5,16 @@
 # ---------------------------------------------------------
 # Pacotes necessários
 # ---------------------------------------------------------
+
+###INFORMAÇÕES IMPORTANTES DOS PACOTES
 # rstudioapi - Definir a trilha de dados automaticamente
 # data.table - Exportar e importar dados para o R
 # terra - Trabalhar com imagens raster e dados espaciais
 # sf - Criar e manipular shapefiles e objetos espaciais vetoriais
 # RStoolbox - Ferramentas para processamento de imagens de satélite
+
+
+########Estudar melhor esse script
 
 required_packages <- c("rstudioapi", "terra", "data.table", "sf", "RStoolbox")
 
@@ -50,7 +55,7 @@ print(paste("Diretório de trabalho atual:", getwd()))
 
 # Coloque aqui o caminho da pasta onde estão as bandas da imagem.
 # Exemplo:
-setwd("C:\\Users\\leonardo\\OneDrive\\Documentos Analise\\R no Mundo Real Dados Climáticos, APIs, Satélites e Machine Learning\\Browser_images")
+setwd("C:\\Users/dougl\\Documents\\WorkShop R\\Browser_images")
 
 # Verificar arquivos disponíveis na pasta
 list.files()
@@ -78,6 +83,7 @@ nir
 # =========================================================
 
 # Criar um objeto com várias bandas juntas
+###Função c cria vetores
 img <- c(blue, green, red, nir)
 
 # Nomear as bandas
