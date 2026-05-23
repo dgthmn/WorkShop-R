@@ -13,6 +13,10 @@
 # brulee - Ajustar redes neurais usando infraestrutura do torch
 # vip - Avaliar importância das variáveis em modelos preditivos
 
+###pacote caret tem muitos modelos para trabalharmos
+###nnet redes neurais!
+
+
 required_packages <- c(
   "rstudioapi",
   "data.table",
@@ -40,6 +44,7 @@ print(paste("Diretório de trabalho atual:", getwd()))
 # 1) IMPORTAR A BASE DE DADOS
 # =========================================================
 
+###mtcars são dados base do R
 # Nesta aula, vamos usar a base mtcars como exemplo didático.
 # O objetivo será predizer o consumo de combustível dos carros.
 # A variável resposta será mpg.
@@ -98,6 +103,8 @@ teste  <- dados_ml[-indice_treino, ]
 # 4) CONTROLE DA VALIDAÇÃO CRUZADA
 # =========================================================
 
+
+###cv é o método de validação cruzada
 controle <- trainControl(
   method = "cv",
   number = 5,
@@ -106,6 +113,7 @@ controle <- trainControl(
 
 # =========================================================
 # 5) DEFINIR GRADE DE HIPERPARÂMETROS
+###SINTONIZAÇÃO DE HIPERPARÂMETROS!!!
 # =========================================================
 # size = Número de neurônios na camada oculta
 # Define quantos neurônios existirão na camada intermediária da rede neural.
@@ -148,6 +156,7 @@ modelo_nn$results
 # 8) PREDIZER BASE DE TESTE
 # =========================================================
 
+#######NO FINAL EU TENHO OS VALORES REAIS E OS VALORES PREDITOS
 predicoes <- teste %>%
   mutate(
     .pred = predict(modelo_nn, newdata = teste)
@@ -171,6 +180,10 @@ resultado_final <- data.frame(
 )
 
 resultado_final
+####AQUI O RESULTADO REAL TEVE 
+###UM R2 MELHOR DO QUE OS PREDITOS
+###PROVÁVEL QUE DEVIDO AO NÚMERO REDUZIDO DE AMOSTRAS
+###PQ O NORMAL É OS MODELOS PREDITOS SEREM MELHOR QUE O REAL
 
 # =========================================================
 # 10) GRÁFICO: OBSERVADO VS PREDITO
