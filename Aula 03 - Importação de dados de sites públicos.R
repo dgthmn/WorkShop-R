@@ -95,7 +95,7 @@ fwrite(base_final, "VALE3.csv")
 dados_empresa
 
 
-###TUDO AQUI FUNCIONA PARA QUALQUER SITE QUE CONTENHA DADOS PÚBLICOS
+###TUDO AQUI FUNCIONA PARA QUALQUER SITE QUE CONTENHA DADOS PÚBLICOS#
 
 
 # =========================================================
