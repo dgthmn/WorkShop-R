@@ -8,7 +8,7 @@
 # rstudioapi - Definir a trilha de dados automaticamente
 # data.table - Exportar e importar dados para o R
 # dplyr - Manipulação de dados
-# rvest - Acessar sites para web scrapping
+# rvest - Acessar sites para web scrapping (Acessar dados)
 required_packages <- c("rstudioapi", "dplyr", "data.table", "rvest")
 
 for (pkg in required_packages) {
@@ -29,23 +29,57 @@ print(paste("Diretório de trabalho atual:", getwd()))
 # ---------------------------------------------------------
 
 # URL da página com informações sobre ações
+
+###AQUI É MENOS AUTOMÁTICO QUE NAS OUTRAS AULAS, ENTÃO A 
+###CURADORIA DO PESQUISADOR PRECISA SER BEM FEITA
+### OU SEJA, É PRECISO VER O QUE FOI BAIXADO E IDENTIFICAR
+### ERROS ANTES DE FAZER AS ANÁLISES
+
+
+###PASSO 1 - ESCREVER O URL CORRETO
 empresa <- "VALE3"
+###O paste é para unir a parte padrão do url em aspas abaixo e
+###e a página específica da emprea
 url <- paste("https://www.fundamentus.com.br/detalhes.php?papel=",empresa, sep="")
-  
+
+###o passo acima é útil para baixar, por exemplo as infos de 
+###duas empresas diferentes
 # Ler a página
 page <- read_html(url)
 page
 
+###PASSO 2 - TRAZER DADOS DE TEXTO
 # Extrair o dividend yield (modifique o seletor conforme necessário)
 dados_empresa <- page %>%
     html_nodes(".txt") %>%  # Insira o seletor correto
     html_text()
 dados_empresa
 
+
+###PASSO 3 - ORGANIZAR OS DADOS
+###NÚMEROS VIERAM COM ',' DE SEPARADOR DECIMAL, ENTÃO 
+###TRANSFORMO ISSO EM '.' COMO SEPARADOR
 dados_empresa<-gsub(",", ".", dados_empresa)
+
+###NÚMEROS POSSUEM /N ANTES COMO SEPARADOR DE LINHA
+###E É PRECISO EXCLUIR ISSO OU 'substituir por nada'
 dados_empresa<-gsub("\n", "", dados_empresa)
+
+###ALGUNS NÚMEROS TEM UM '%' APÓS, E TB É PRECISO EXCLUIR
 dados_empresa<-gsub("%", "", dados_empresa)
-  
+
+###CONSTRUIR O DATA FRAME
+###dentro do parentese temos:
+###Stock (é o nome que quero dar a coluna)
+###=dados_empresa (de onde tiro a informação)
+###[2] é a coluna dos dados originais que quero transformar
+###em "Stock"
+### a mesma coisa para todas as colunas que serão criadas no meu
+###novo data frame
+###por exemplo, nos dados originais "data_empresa", o setor 
+###da empresa VALE3 está na linha 14, então eu coloco o nome
+###que quero dar na minha nova tabela e adiciono a linha da
+###da qual eu quero puxar os dados, nesse casa a [14]
 # Construir a base de dados limpa
 base_final<-data.frame(Stock=dados_empresa[2],
                        Name=dados_empresa[10],
@@ -58,7 +92,7 @@ base_final<-data.frame(Stock=dados_empresa[2],
                        CAGR=dados_empresa[83])
 base_final
 fwrite(base_final, "VALE3.csv")
-
+dados_empresa
 # =========================================================
 # PRÓXIMOS PASSOS: AUTOMAÇÃO DE DADOS DE SITES PÚBLICOS NO R
 # =========================================================
