@@ -58,6 +58,11 @@ names(milho_municipio)
 # coluna "Município" = nome do município
 # coluna "Valor" = produção
 
+
+###RENOMEANDO AS COLUNAS COM O "rename"
+###primeiro o novo nome "code_muni"
+###depois o que será altera
+###= "Município (Código)"
 milho_municipio <- milho_municipio %>%
   rename(
     code_muni = `Município (Código)`,
@@ -83,6 +88,8 @@ mapa_municipios <- read_municipality(
 # Visualizar o mapa
 plot(mapa_municipios["code_muni"])
 
+
+#####AQUI A BRINCADEIRA COMEÇA!
 # =========================================================
 # 4) UNIR OS DADOS DO IBGE COM O MAPA
 # =========================================================
@@ -90,6 +97,10 @@ plot(mapa_municipios["code_muni"])
 # A união será feita pela coluna code_muni
 # Essa coluna representa o código oficial do município no IBGE.
 
+###A função left_join uni as bases de dados
+###"code_muni" É UMA COLUNA QUE PRECISA TER
+###E POR ISSO TIVEMOS QUE TROCAR O NOME DA COLUNA
+###NA PALNILHA "mapa_municipios" acima
 mapa_milho <- mapa_municipios %>%
   left_join(milho_municipio, by = "code_muni")
 
